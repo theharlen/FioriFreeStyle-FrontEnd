@@ -24,6 +24,10 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "users":{
+				"uri": "model/Users.json",
+				"type": "JSON"        
       }
     }
   },
@@ -62,6 +66,10 @@
         "settings": {
           "bundleName": "zso.i18n.i18n"
         }
+      },
+      "users" :{
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "users"        
       },
       "": {
         "dataSource": "mainService",

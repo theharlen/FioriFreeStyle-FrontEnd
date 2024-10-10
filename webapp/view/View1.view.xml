@@ -2,44 +2,36 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:t="sap.ui.table"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <Button text="Hello world" press="onPress"/>
+<Page id="page" title="{i18n>title}">
+      <VBox class="sapUiTinyMargin">
+        <Label text="Standard model of view (source: controller)"/>
+        <Text text="{/users/name}"/>
+        <Text text="--------------------------------------------------"/>
 
-    <Label text="Client ID" />
-    <Input />
-<t:Table id="table1"
-            rows="{/SoHeaderSet}"
-            visibleRowCount="10"
-            threshold="10"
-            class="sapUiTinyMargin"
-            selectionMode="MultiToggle">
-            <t:toolbar>
-                <OverflowToolbar>
-                    <Title id="title" text="Orders"></Title>
-                </OverflowToolbar>
-            </t:toolbar>
-            <t:columns>
-                <t:Column width="4rem" sortProperty="OrderId">
-                    <Label text="OrderId" />
-                    <t:template>
-                        <Text text="{OrderId}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column width="10rem" sortProperty="ClientId" filterProperty="ClientId" autoResizable="true">
-                    <Label text="Client ID" />
-                    <t:template>
-                        <Text text="{ClientId}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column width="10rem" sortProperty="NetValue" filterProperty="NetValue" autoResizable="true">
-                    <Label text="Net Value" />
-                    <t:template>
-                        <Text text="{NetValue}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-            </t:columns>
-        </t:Table>
+        <Label text="Model 'data' of view (source: controller)"/>
+        <Text text="{data>/users/name}"/>
+        <Text text="--------------------------------------------------"/>
+        
+        <Label text="Model i18n - title key (source: manifest)"/>
+        <Text text="{i18n>appTitle}"/>
+        <Text text="--------------------------------------------------"/>
 
+        <Label text="Model 'userss' (source: manifest)"/>
+        <Text text="{users>/0/id} - {users>/0/name}"/>
+        <Text text="--------------------------------------------------"/>
+        
+        <Label text="Standard model of service (source: manifest)"/>
+        <List headerText="Orders" items="{ path: '/SoHeaderSet' }" >
+          <StandardListItem title="Order {OrderId}" description="{CreatedBy}"/>
+        </List>
 
+        <Text text="{/SoHeaderSet(10)/OrderId} - {/SoHeaderSet(10)/CreatedBy}"/>
+        <Text text="****************************************************"/>
+
+        <Text id="FirstOrder" />
+        <Text text="****************************************************"/>
+
+        <Button text="Testing Models" press="onTestModels"/>
+      </VBox>
     </Page>
 </mvc:View>
