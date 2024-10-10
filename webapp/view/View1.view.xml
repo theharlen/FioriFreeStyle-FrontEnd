@@ -2,36 +2,26 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:t="sap.ui.table"
     xmlns="sap.m">
-<Page id="page" title="{i18n>title}">
+    <Page id="page" title="{i18n>title}">
       <VBox class="sapUiTinyMargin">
-        <Label text="Standard model of view (source: controller)"/>
-        <Text text="{/users/name}"/>
+        <Label text="One Way: Model → View"/>
+        <Input value="{oneway>/users/name}"/>
+        <Text text="{oneway>/users/name}"/>
+        <Button text="One Way - Adicionar Ponto Final" press="onTestOneWay"/>
+
         <Text text="--------------------------------------------------"/>
 
-        <Label text="Model 'data' of view (source: controller)"/>
-        <Text text="{data>/users/name}"/>
+        <Label text="Two Way: Model ↔ View"/>
+        <Input value="{twoway>/users/name}"/>
+        <Text text="{twoway>/users/name}"/>
+        <Button text="Two Way - Adicionar Ponto Final" press="onTestTwoWay"/>
+
         <Text text="--------------------------------------------------"/>
-        
-        <Label text="Model i18n - title key (source: manifest)"/>
-        <Text text="{i18n>appTitle}"/>
-        <Text text="--------------------------------------------------"/>
 
-        <Label text="Model 'userss' (source: manifest)"/>
-        <Text text="{users>/0/id} - {users>/0/name}"/>
-        <Text text="--------------------------------------------------"/>
-        
-        <Label text="Standard model of service (source: manifest)"/>
-        <List headerText="Orders" items="{ path: '/SoHeaderSet' }" >
-          <StandardListItem title="Order {OrderId}" description="{CreatedBy}"/>
-        </List>
-
-        <Text text="{/SoHeaderSet(10)/OrderId} - {/SoHeaderSet(10)/CreatedBy}"/>
-        <Text text="****************************************************"/>
-
-        <Text id="FirstOrder" />
-        <Text text="****************************************************"/>
-
-        <Button text="Testing Models" press="onTestModels"/>
+        <Label text="One Time: Model → View (uma vez)"/>
+        <Input value="{onetime>/users/name}"/>
+        <Text text="{onetime>/users/name}"/>
+        <Button text="One Time - Adicionar Ponto Final" press="onTestOneTime"/>
       </VBox>
     </Page>
 </mvc:View>

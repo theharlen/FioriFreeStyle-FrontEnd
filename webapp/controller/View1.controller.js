@@ -6,62 +6,55 @@ function (Controller) {
 
     return Controller.extend("zso.controller.View1", {
         onInit: function () {
-            /*
-            // model padrão da view
             var oView  = this.getView();
-            var oModel = new sap.ui.model.json.JSONModel();
-            oModel.setData({"users": {"name": "Tyrion Lanister"}});
-            oView.setModel(oModel);
-            */
-            
-            // model com o name "data"
-            var oView  = this.getView();
-            var oModel = new sap.ui.model.json.JSONModel();
-            oModel.setData({"users": {"name": "Twin Lanister"}});
-            oView.setModel(oModel,"data");
 
-            var oDataModel = this.getOwnerComponent().getModel();
-            oDataModel.read("/SoHeaderSet", {
-                success: function(oData) {
-                  var oFirstItem = oData.results[0]; // Get the first register
-                  this.getView().byId("FirstOrder").setText(oFirstItem.OrderId + " - " + oFirstItem.CreatedBy);
-                }.bind(this),
-                error: function(oError) {
-                  console.error(oError);
-                }
-              });            
+            var oModel1 = new sap.ui.model.json.JSONModel();
+            oModel1.setData({"users": {"name": "Jhon Snow"}});
+            oModel1.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
+            oView.setModel(oModel1,"oneway");
+
+            var oModel2 = new sap.ui.model.json.JSONModel();
+            oModel2.setData({"users": {"name": "Cersei Lanister"}});
+            oModel2.setDefaultBindingMode(sap.ui.model.BindingMode.TwoWay);
+            oView.setModel(oModel2,"twoway");
+
+            var oModel3 = new sap.ui.model.json.JSONModel();
+            oModel3.setData({"users": {"name": "Daenery Targaeryan"}});
+            oModel3.setDefaultBindingMode(sap.ui.model.BindingMode.OneTime);
+            oView.setModel(oModel3,"onetime");
         },
 
-        onTestModels: function(){
-            // model i18n
-            var oI18n = this.getView().getModel("i18n").getResourceBundle();
-            var sText = oI18n.getText("appTitle");
+        onTestOneWay: function(){
+            var oView  = this.getView();
 
-            console.log("Key title text 'title'");
-            console.log(sText);
+            var oModel = oView.getModel("oneway");
+            var oData  = oModel.getData();
+            oData.users.name += ".";
+            oModel.setData(oData);
+            //oView.setModel(oModel,"oneway");
+        },
 
-            console.log("------------------------------------------");
+        onTestTwoWay: function(){
+            var oView  = this.getView();
+            
+            var oModel = oView.getModel("twoway");
+            var oData  = oModel.getData();
+            oData.users.name += ";";
+            oModel.setData(oData);
+            //oView.setModel(oModel,"twoway");
+        },
 
-            // model de usuários
-            var oModel = this.getOwnerComponent().getModel("users");
-            var oData = oModel.getData();
-            console.log("User's model")
-            console.log(oData);
+        onTestOneTime: function(){
+            var oView  = this.getView();
+            
+            var oModel = oView.getModel("onetime");
+            var oData  = oModel.getData();
 
-            console.log("------------------------------------------");
+            debugger;
 
-            // model do serviço
-            var oModel = this.getOwnerComponent().getModel();
-            oModel.read("/SoHeaderSet",{
-                success: function(oData, oResponse){
-                    console.log("Data returned from the service")
-                    console.log(oData);
-                    console.log(oResponse);
-                },
-                error: function(oError){
-                    console.log(oError);
-                }
-            });
+            oData.users.name += ":";
+            oModel.setData(oData);
+            //oView.setModel(oModel,"onetime");
         }
     });
 });
