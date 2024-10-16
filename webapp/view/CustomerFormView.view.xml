@@ -1,0 +1,12 @@
+<mvc:View controllerName="zso.controller.CustomerFormView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m">
+    <Page id="page2" title="Client Form" showNavButton="true"	navButtonPress="onNavBack">
+      <VBox class="sapUiTinyMargin">
+        <Text text="We are on CustomerFormView"/>
+
+        <Button text="Go back to main view" press="onView1"/>
+      </VBox>
+    </Page>
+</mvc:View>
