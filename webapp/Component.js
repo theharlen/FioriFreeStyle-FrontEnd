@@ -5,9 +5,10 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "zso/model/models"
+        "zso/model/models",
+        "sap/ui/model/odata/v2/ODataModel"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, ODataModel) {
         "use strict";
 
         return UIComponent.extend("zso.Component", {
@@ -29,6 +30,12 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                // Create and set the OData model with useBatch disabled
+                var oModel = new ODataModel("/sap/opu/odata/sap/ZHMPV_SALES_ORDERS_SRV", {
+                   // useBatch: false
+                });
+                this.setModel(oModel);                
             }
         });
     }
