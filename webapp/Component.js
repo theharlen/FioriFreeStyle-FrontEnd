@@ -33,7 +33,7 @@ sap.ui.define([
 
                 // Create and set the OData model with useBatch disabled
                 var oModel = new ODataModel("/sap/opu/odata/sap/ZHMPV_SALES_ORDERS_SRV", {
-                   // useBatch: false
+                    useBatch: false
                 });
                 this.setModel(oModel);                
             }

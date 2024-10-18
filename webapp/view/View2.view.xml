@@ -1,12 +1,12 @@
-<mvc:View controllerName="zso.controller.View1"
+<mvc:View controllerName="zso.controller.View2"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:core="sap.ui.core"
     xmlns:t="sap.ui.table"
-	  xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:fb="sap.ui.comp.filterbar"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    <Page id="page2" title="{i18n>title}">
       
-      <fb:FilterBar id="filterBar1" reset="onFilterReset" search="onFilterSearch">
+      <fb:FilterBar id="filterBar2" reset="onFilterReset" search="onFilterSearch">
 		<fb:filterItems>
 			<fb:FilterItem name="OrderId" label="{i18n>OrderId}">
 				<fb:control>
@@ -36,9 +36,9 @@
 				</fb:control>
 			</fb:FilterItem>
 
-			<fb:FilterItem name="SortType" label="{i18n>SortType}">
+			<fb:FilterItem name="OrdenacaoTipo" label="{i18n>OrdenacaoTipo}">
 				<fb:control>
-					<Select selectedKey="{filter>/SortType}">
+					<Select selectedKey="{filter>/OrdenacaoTipo}">
 						<items>
 							<core:Item text="" key=""/>
 							<core:Item text="{i18n>ASC}" key="ASC"/>
@@ -47,11 +47,24 @@
 					</Select>
 				</fb:control>
 			</fb:FilterItem>
+
+			<fb:FilterItem name="Limit" label="{i18n>Limit}">
+				<fb:control>
+					<Input value="{filter>/Limit}" type="Number"/>
+				</fb:control>
+			</fb:FilterItem>
+
+			<fb:FilterItem name="Offset" label="{i18n>Offset}">
+				<fb:control>
+					<Input value="{filter>/Offset}" type="Number"/>
+				</fb:control>
+			</fb:FilterItem>
 		</fb:filterItems>
 	</fb:FilterBar>
 
-	<t:Table id="soHeaderTable"
-		rows="{/SoHeaderSet}"
+	<!-- linking the table to a model -->
+	<t:Table id="table2"
+		rows="{table>/}"
 		selectionMode="MultiToggle"
 		class="sapUiSmallMargin"
 		rowMode="Fixed"
@@ -61,44 +74,44 @@
 		>
 		<t:toolbar>
 			<OverflowToolbar>
-				<Title id="title" text="Orders"></Title>
+				<Title id="title" text="Ordens"></Title>
 			</OverflowToolbar>
 		</t:toolbar>
 		<t:columns>
 			<t:Column width="100px" sortProperty="OrderId">
 				<Label text="{i18n>OrderId}" />
 				<t:template>
-					<Text text="{OrderId}" wrapping="false" />
+					<Text text="{table>OrderId}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="CreatedOn">
 				<Label text="{i18n>CreatedOn}" />
 				<t:template>
-					<Text text="{path: 'CreatedOn', type: 'sap.ui.model.odata.type.Date', formatOptions: { UTC:true, pattern: 'dd/MM/yyyy'}}" wrapping="false" />
+					<Text text="{path: 'table>CreatedOn', type: 'sap.ui.model.odata.type.Date', formatOptions: { UTC:true, pattern: 'dd/MM/yyyy'}}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="ClientId" filterProperty="ClientId" autoResizable="true">
 				<Label text="{i18n>ClientId}" />
 				<t:template>
-					<Text text="{ClientId}" wrapping="false" />
+					<Text text="{table>ClientId}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="CreatedBy" filterProperty="CreatedBy" autoResizable="true">
 				<Label text="{i18n>CreatedBy}" />
 				<t:template>
-					<Text text="{CreatedBy}" wrapping="false" />
+					<Text text="{table>CreatedBy}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="NetValue" filterProperty="NetValue" autoResizable="true">
 				<Label text="{i18n>NetValue}" />
 				<t:template>
-					<Text text="{NetValue}" wrapping="false" />
+					<Text text="{table>NetValue}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="DocCategory" filterProperty="DocCategory" autoResizable="true">
 				<Label text="{i18n>DocCategory}" />
 				<t:template>
-					<Text text="{path: 'DocCategory', formatter: '.formatter.formatDocCategory'}" wrapping="false" />
+					<Text text="{path: 'table>DocCategory', formatter: '.formatter.formatDocCategory'}" wrapping="false" />
 				</t:template>
 			</t:Column>
         </t:columns>

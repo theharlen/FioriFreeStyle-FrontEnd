@@ -121,8 +121,8 @@
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "View1",
-          "viewName": "View1"
+          "viewId": "View2",
+          "viewName": "View2"
         },
         "TargetCustomerForm": {
           "viewType": "XML",
