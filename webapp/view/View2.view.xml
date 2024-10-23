@@ -13,13 +13,11 @@
 					<Input value="{filter>/OrderId}"/>
 				</fb:control>
 			</fb:FilterItem>
-
 			<fb:FilterItem name="ClientId" label="{i18n>ClientId}">
 				<fb:control>
 					<Input value="{filter>/ClientId}"/>
 				</fb:control>
 			</fb:FilterItem>
-
 			<fb:FilterItem name="SortFields" label="{i18n>SortFields}">
 				<fb:control>
 					<Select selectedKey="{filter>/SortFields}">
@@ -35,7 +33,6 @@
 					</Select>
 				</fb:control>
 			</fb:FilterItem>
-
 			<fb:FilterItem name="OrdenacaoTipo" label="{i18n>OrdenacaoTipo}">
 				<fb:control>
 					<Select selectedKey="{filter>/OrdenacaoTipo}">
@@ -47,13 +44,11 @@
 					</Select>
 				</fb:control>
 			</fb:FilterItem>
-
 			<fb:FilterItem name="Limit" label="{i18n>Limit}">
 				<fb:control>
 					<Input value="{filter>/Limit}" type="Number"/>
 				</fb:control>
 			</fb:FilterItem>
-
 			<fb:FilterItem name="Offset" label="{i18n>Offset}">
 				<fb:control>
 					<Input value="{filter>/Offset}" type="Number"/>
@@ -62,9 +57,15 @@
 		</fb:filterItems>
 	</fb:FilterBar>
 
+	<FlexBox alignItems="Center" justifyContent="End">
+		<Button text="Supply" class="sapUiTinyMarginEnd" press="onUpdateStatus('S')"/>
+		<Button text="Billing" class="sapUiTinyMarginEnd" press="onUpdateStatus('B')"/>
+		<Button text="Cancel" class="sapUiTinyMarginEnd" press="onUpdateStatus('C')"/>
+	</FlexBox>
+
 	<!-- linking the table to a model -->
 	<t:Table id="table2"
-		rows="{table>/}"
+		rows="{table2>/}"
 		selectionMode="MultiToggle"
 		class="sapUiSmallMargin"
 		rowMode="Fixed"
@@ -81,41 +82,40 @@
 			<t:Column width="100px" sortProperty="OrderId">
 				<Label text="{i18n>OrderId}" />
 				<t:template>
-					<Text text="{table>OrderId}" wrapping="false" />
+					<Text text="{table2>OrderId}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="CreatedOn">
 				<Label text="{i18n>CreatedOn}" />
 				<t:template>
-					<Text text="{path: 'table>CreatedOn', type: 'sap.ui.model.odata.type.Date', formatOptions: { UTC:true, pattern: 'dd/MM/yyyy'}}" wrapping="false" />
+					<Text text="{path: 'table2>CreatedOn', type: 'sap.ui.model.odata.type.Date', formatOptions: { UTC:true, pattern: 'dd/MM/yyyy'}}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="ClientId" filterProperty="ClientId" autoResizable="true">
 				<Label text="{i18n>ClientId}" />
 				<t:template>
-					<Text text="{table>ClientId}" wrapping="false" />
+					<Text text="{table2>ClientId}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="CreatedBy" filterProperty="CreatedBy" autoResizable="true">
 				<Label text="{i18n>CreatedBy}" />
 				<t:template>
-					<Text text="{table>CreatedBy}" wrapping="false" />
+					<Text text="{table2>CreatedBy}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="NetValue" filterProperty="NetValue" autoResizable="true">
 				<Label text="{i18n>NetValue}" />
 				<t:template>
-					<Text text="{table>NetValue}" wrapping="false" />
+					<Text text="{table2>NetValue}" wrapping="false" />
 				</t:template>
 			</t:Column>
 			<t:Column width="100px" sortProperty="DocCategory" filterProperty="DocCategory" autoResizable="true">
 				<Label text="{i18n>DocCategory}" />
 				<t:template>
-					<Text text="{path: 'table>DocCategory', formatter: '.formatter.formatDocCategory'}" wrapping="false" />
+					<Text text="{path: 'table2>DocCategory', formatter: '.formatter.formatDocCategory'}" wrapping="false" />
 				</t:template>
 			</t:Column>
         </t:columns>
       </t:Table>
-
     </Page>
 </mvc:View>

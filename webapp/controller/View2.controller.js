@@ -29,13 +29,55 @@ function (Controller, MessageToast) {
 
             var oTModel = new sap.ui.model.json.JSONModel();
             oTModel.setData([]);
-            oView.setModel(oTModel,"table");
+            oView.setModel(oTModel,"table2");
 
             this.onFilterSearch();
         },
 
         onFilterReset: function(){
         },
+
+        onUpdateStatus: function(sDocCategory){
+            var oTable = this.getView().byId("table2");
+            var oModel = this.getOwnerComponent().getModel();
+            var aIndex = oTable.getSelectedIndices();
+            var oController = this;
+
+            if (aIndex.length == 0) {
+                MessageToast.show("Select one row");
+                return;
+            }
+
+            if (aIndex.length > 1) {
+                MessageToast.show("Select only one row");
+                return;
+            }
+
+            var oItem = oTable.getContextByIndex(aIndex[0]);
+            var oOrderId = oItem.getProperty("OrderId");
+
+            this.getView().setBusy(true);
+            oModel.callFunction( "/ZSALES_ORDER_UPDATE_STATUS",
+                {
+                    method: "GET",
+                    urlParameters: {
+                        OrderId: oOrderId,
+                        DocCategory: sDocCategory
+                    },
+                    success: function(oData2, oResponse){
+                        oController.getView().setBusy(false);
+                        
+                        MessageToast.show("Status successfully updated");
+                        //setting data to main table
+                        oController.onFilterSearch();
+                    },
+                    error: function(oError){
+                        oController.getView().setBusy(false);
+                        MessageToast.show("Error");
+                    }
+                });
+
+        },        
 
         onFilterSearch: function(oEvent){
             //Getting view reference
@@ -45,7 +87,7 @@ function (Controller, MessageToast) {
             //Getting filter data
             var oFModel = oView.getModel("filter");
             //Getting table data
-            var oTModel = oView.getModel("table");
+            var oTModel = oView.getModel("table2");
             //Extracting filter data
             var oFData  = oFModel.getData();
             var oFilter = null;
@@ -127,8 +169,8 @@ function (Controller, MessageToast) {
             });
 
             var oModel = this.getOwnerComponent().getModel();
-            console.log("Modelo OData:", oModel);
-            console.log("Tipo do modelo:", oModel instanceof sap.ui.model.odata.v2.ODataModel);            
+            console.log("Odata model:", oModel);
+            console.log("Model type:", oModel instanceof sap.ui.model.odata.v2.ODataModel);            
         }
     });
 });
