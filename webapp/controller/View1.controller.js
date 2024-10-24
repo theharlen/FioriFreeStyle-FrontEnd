@@ -1,91 +1,55 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
+    "sap/m/MessageToast",
+    "../model/formatter"
 ],
-function (Controller, MessageToast) {
+function (Controller, MessageToast,formatter) {
     "use strict";
 
     return Controller.extend("zso.controller.View1", {
+        formatter: formatter,
+
         onInit: function () {
             var oView   = this.getView();
-            var oFModel = new sap.ui.model.json.JSONModel();
-
-            //Starting Json model
-            oFModel.setData({
-                "OrderId": "",
-                "CreatedOn": "",
-                "CreatedBy": "",
-                "ClientId": "",
-                "NetValue": "",
-                "DocCategory": "",
-                "SortFields": "OrderId",
-                "SortType": "ASC"
-            });
-            oView.setModel(oFModel,"filter");
-
-            this.onFilterSearch();
-        },
-
-        onFilterReset: function(){
-
-        },
-
-        onFilterSearch: function(oEvent){
-            var oView   = this.getView();
-            var oTable  = oView.byId("soHeaderTable");
-            //retrieving the filter set previously on method onInit
-            var oFModel = oView.getModel("filter");
-            var oFData  = oFModel.getData();
-            var oFilter = null;
-            var aParams = [];
-
-            // aplicando filtros
-            var aSorter  = [];
-            var aFilters = [];
+            var oModel = new sap.ui.model.json.JSONModel();
             
-            if(oFData.OrderId != ''){
-                oFilter = new sap.ui.model.Filter({
-                    path: 'OrderId',
-                    //class for Filter
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    //filter field "OrderId"
-                    value1: oFData.OrderId
-                });
-                aFilters.push(oFilter);
-            }
-
-            if(oFData.CreatedOn != ''){
-                oFilter = new sap.ui.model.Filter({
-                    path: 'CreatedOn',
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    value1: oFData.CreatedOn
-                });
-                aFilters.push(oFilter);
-            }
-
-            if(oFData.ClientId != ''){
-                oFilter = new sap.ui.model.Filter({
-                    path: 'ClientId',
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    value1: oFData.ClientId
-                });
-                aFilters.push(oFilter);
-            }
-
-            var bDescending = false;
-            if(oFData.SortType == "DESC"){
-                bDescending = true;
-            }
-            //Order class
-            var oSort = new sap.ui.model.Sorter(oFData.SortFields,bDescending);
-            aSorter.push(oSort);
-
-            // executing filter (it receives a json)
-            oTable.bindRows({
-                path: '/SoHeaderSet',
-                sorter: aSorter,
-                filters: aFilters
+            oModel.setData({
+                "DataCriacao": new Date(),
+                "Preco": 1500.23,
+                "Status": "N",
+                "Moeda": "BRL",
+                "CPF": "12345678910"
             });
+            
+            oView.setModel(oModel,"dados");
+        },
+
+        onChangePrice: function(oEvent){
+            var _oInput = oEvent.getSource();
+            var val = _oInput.getValue();
+            val = val.replace(/[^\d]/g, '');
+
+            if(val == ""){
+                _oInput.setValue(val);
+                return;
+            }
+
+            // removendo zero a esquerda
+            val = val.replace(/^0+/, '');
+
+            var length = val.length;
+            if(length == 1){
+                val = "0,0"+val;
+            }else if(length == 2){
+                val = "0,"+val;
+            }else if(length > 2){
+                val = val.slice(0,length-2)+"."+val.slice(-2);
+                val = formatter.formatPrice(val);
+            }else{
+                val = "";
+            }
+            
+            _oInput.setValue(val);
         }
     });
 });
