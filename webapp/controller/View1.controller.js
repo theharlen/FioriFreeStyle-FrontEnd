@@ -9,52 +9,78 @@ function (Controller, MessageToast) {
         onInit: function () {
         },
 
-        onNormalRequest() {
-            this.executeRequests(false);
+        onTestCallback() {
+            console.log("[Process 1] Start");
+            this.onGetOrder(1,function(oData,oResponse){
+                console.log("[Process 2] call finished");
+                console.log(oData);
+                console.log(oResponse);
+            });
+            console.log("[Process 1] End");
         },
 
-        onBatchRequest() {
-            this.executeRequests(true);
-        },
-
-        executeRequests(bUseBatch) {
+        onGetOrder: function(iId,callback){
             var oModel = this.getOwnerComponent().getModel();
+            oModel.setUseBatch(false);
 
-            //Setting server call (normal or batch)
-            oModel.setUseBatch(bUseBatch);
+            oModel.read("/SoHeaderSet('"+iId+"')",{
+                success: function(oData2, oResponse){
+                    callback(oData2,oResponse);
+                },
+                error: function(oError){
+                }
+            });
+        },
+
+        onTestPromise1() {
+            console.log("[Process 1] Start");
+            var oPromise1 = this.onGetOrder2(1);
+            oPromise1.then(function(oData,oResponse){
+                console.log("[Process 2] Finished");
+                console.log(oData);
+                console.log(oResponse);
+            });
+            console.log("[Process 1] End");
+        },
+
+        onTestPromise2() {
+            console.log("[Process 1] Start");
+
+            var oPromise1 = this.onGetOrder2(1);
+            oPromise1.then(function(oData,oResponse){
+                console.log("[Process 2] Finished");
+                //console.log(oData);
+                //console.log(oResponse);
+            });
+
+            var oPromise2 = this.onGetOrder2(2);
+            oPromise2.then(function(oData,oResponse){
+                console.log("[Process 3] Finished");
+                //console.log(oData);
+                //console.log(oResponse);
+            });
             
-            console.log("Executing requests");
-            console.log("-------------------------------------------");
-
-            // requisição 1
-            oModel.read("/SoHeaderSet('1')",{
-                success: function(oData2, oResponse){
-                    console.log("Reading key 1: OK");
-                },
-                error: function(oError){
-                    console.log("Reading key 1: Erro");
-                    console.log(oError);
-                }
+            Promise.all([oPromise1,oPromise2]).then(function(aRetorno){
+                console.log("[Process 4] Promise.all Finished");
+                console.log(aRetorno);
             });
 
-            // requisição 2
-            oModel.read("/SoHeaderSet('2')",{
-                success: function(oData2, oResponse){
-                    console.log("Reading key 2: OK");
-                },
-                error: function(oError){
-                    console.log("Reading key 2: Erro");
-                }
-            });
+            console.log("[Process 1] End");
+        },
 
-            // requisição 3
-            oModel.remove("/SoHeaderSet('3')",{
-                success: function(oData2, oResponse){
-                    console.log("Exclusão chave 3: OK");
-                },
-                error: function(oError){
-                    console.log("Exclusão chave 3: Erro");
-                }
+        onGetOrder2: function(iId){
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.setUseBatch(false);
+
+            return new Promise(function(resolve,reject){
+                oModel.read("/SoHeaderSet('"+iId+"')",{
+                    success: function(oData2, oResponse){
+                        resolve({oData: oData2, oResponse: oResponse});
+                    },
+                    error: function(oError){
+                        reject({oError:oError});
+                    }
+                });
             });
         }
     });

@@ -6,7 +6,9 @@
     xmlns="sap.m">
     <Page id="page1" title="{i18n>title}">
       
-	  	<Button text="Normal request" press="onNormalRequest" />
-        <Button text="Batch request" press="onBatchRequest" />
+	  	<Button text="Callback" press="onTestCallback" />
+        <Button text="Promise (1)" press="onTestPromise1" />
+        <Button text="Promise (N)" press="onTestPromise2" />
+        
     </Page>
 </mvc:View>
