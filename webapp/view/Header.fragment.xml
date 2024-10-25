@@ -1,0 +1,7 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <!--Fragments doesn't have controller. It uses the calling view controller-->
+    <Text text="Fragment: Header" class="sapUiTinyMargin"/>
+    <Button text="Header" press="onHeader"/>
+</core:FragmentDefinition>

@@ -5,14 +5,14 @@ sap.ui.define([
 function (Controller, MessageToast) {
     "use strict";
 
-    return Controller.extend("zso.controller.View1", {
+    return Controller.extend("zso.controller.Footer", {
 
         onInit: function () {
 
         },
 
-        onHeader: function(){
-            alert("onHeader");
+        onFooter: function(){
+            alert("onFooter");
         }
     });
 });
