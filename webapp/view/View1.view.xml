@@ -6,12 +6,8 @@
     xmlns="sap.m">
     <Page id="page1" title="{i18n>title}">
       
-	  	<core:Fragment fragmentName="zso.view.Header" type="XML" />
+	  	<Button text="Open Dialog" press="onOpenDialogInfo" />
 
-	  	<VBox class="sapUiTinyMargin">
-			<Text text="Content"/>
-		</VBox>
-
-		<mvc:XMLView viewName="zso.view.Footer"/>
+        <core:Fragment fragmentName="zso.view.DialogInfo" type="XML" />
     </Page>
 </mvc:View>
