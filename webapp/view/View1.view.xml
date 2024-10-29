@@ -6,9 +6,11 @@
     xmlns="sap.m">
     <Page id="page1" title="{i18n>title}">
       
-	  	<Button text="Callback" press="onTestCallback" />
-        <Button text="Promise (1)" press="onTestPromise1" />
-        <Button text="Promise (N)" press="onTestPromise2" />
-        
+        <VBox class="sapUiSmallMargin">
+            <Label text="Order ID"/>
+            <Input value="" id="OrderId"/>
+	  	    <Button text="Show Total Value" press="onShowTotalValue" />
+        </VBox>
+
     </Page>
 </mvc:View>
