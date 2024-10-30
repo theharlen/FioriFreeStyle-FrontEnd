@@ -1,37 +1,23 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
+     //inherits methods from the BaseController that inherites methods from the framework core
+    "zso/controller/BaseController",
+    "sap/ui/core/routing/History",
+    "sap/ui/core/UIComponent"
 ],
-function (Controller, MessageToast) {
-    "use strict";
+    /**
+     * @param {typeof sap.ui.core.mvc.Controller} Controller
+     */
+    function (Controller,History,UIComponent) {
+        "use strict";
 
-    return Controller.extend("zso.controller.View1", {
-        onInit: function () {
-        },
+        return Controller.extend("zso.controller.View1", {
 
-        onShowTotalValue: function(){
-            //debugger;
-            var that     = this;
-            var sOrderId = this.getView().byId("OrderId").getValue();
-            var oModel   = this.getOwnerComponent().getModel();
-            
-            oModel.read("/SoHeaderSet('"+sOrderId+"')",{
-                success: function(oData2, oResponse){
-                    var sMensagem = that.mountMessage(oData2);
-                    alert(sMensagem);
-                },
-                error: function(oError){
-                }
-            });
-        },
+            onInit: function(){
+            },
 
-        mountMessage: function(oOrder){
-            var sMensagem = "";
-
-            sMensagem += "The total value: ";
-            sMensagem += oOrder.NetValue;
-            
-            return sMensagem;
-        }
+            onForm: function(){
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteOrdemForm");
+            }
+        });
     });
-});
